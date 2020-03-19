@@ -43,11 +43,11 @@ class Kmeans(object):
             for i in range(self.K):
                 index = np.nonzero(cluster_labels == i)
                 self.centroids[i] = np.mean(data[index], axis=0)
-            converged = np.sum(np.abs(self.centroids - old_centroids))
+            converged = np.sum(np.abs(self.centroids - old_centroids)) == 0.
 
     def predict(self, data):
         n, d = data.shape
-        labels = np.zeros(n)
+        labels = np.zeros(n, dtype=np.int)
         for i in range(n):
-            labels = np.argmin(distance(data[i], self.centroids), axis=0)
+            labels[i] = np.argmin(distance(data[i], self.centroids), axis=0)
         return labels
